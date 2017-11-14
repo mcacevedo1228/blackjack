@@ -1,5 +1,6 @@
 package com.engineering.marcacevedo.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,14 +13,14 @@ import models.Player;
 import models.Card;
 import models.Game;
 
-public class GameActivity extends AppCompatActivity implements Runnable {
+public class GameActivity extends AppCompatActivity {
 
     // Class Variables
     Game game;
     ArrayList<Player> players;
     TextView tv;
-    private Button hit;
-    private Button stay;
+    private Button hit, stay, main_men, play_again;
+
     Player winner;
 
     @Override
@@ -33,8 +34,13 @@ public class GameActivity extends AppCompatActivity implements Runnable {
         game = new Game();  // Creates a new game for the user. A new game creates two players, deals them cards, and scores their hands
         final Player user = game.getPlayers().get(0);
 
+        // Buttons for game-play
         hit = (Button)findViewById(R.id.Hit);
         stay = (Button)findViewById(R.id.Stay);
+
+        // Buttons for post-game decisions
+        main_men = (Button)findViewById(R.id.Main_Menu);
+        play_again = (Button)findViewById(R.id.Play_Again);
 
         setScreenScore(game);   // Sets the initial score of cards dealt.
 
@@ -57,15 +63,14 @@ public class GameActivity extends AppCompatActivity implements Runnable {
                 // If the current player is the Dealer, let him make his move. Upon completion, scoring takes place.
                 if (game.getCurrentPlayer().getName().equals("Dealer"))
                 {
-                    //TODO: DELETE CONSOLE LINES
-                    System.out.println("DEALER MOVE");
                     // Very rudimentary way of determining whether to hit or not.
                     dealerMove();
-                    System.out.println("Dealer has finished, game is over! ");
-                    // Scores hand to determine winner.
-                    winner = game.scoreHand();
-                }
 
+                    // Scores hand to determine winner.
+                    game.scoreHand();
+                    winner = game.scoreHand();
+                    displayWinner(winner);
+                }
             }
         });
 
@@ -77,15 +82,39 @@ public class GameActivity extends AppCompatActivity implements Runnable {
             {
                 // Signifies next player's turn.
                 game.nextPlayerTurn();
+
                 if (game.getCurrentPlayer().getName().equals("Dealer"))
                 {
                     dealerMove();
                     winner = game.scoreHand();
-                    System.out.println("DEALER STAY");
-                    System.out.println("The winner of the game is the " + winner.getName());
+                    displayWinner(winner);
                 }
             }
         });
+
+        // Click listener with Overridden onClick method to execute desired functions.
+        main_men.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Click listener with Overridden onClick method to execute desired functions.
+        play_again.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            { resetGame(); }
+        });
+
+
+
+
+
+
 
     }
 
@@ -122,11 +151,6 @@ public class GameActivity extends AppCompatActivity implements Runnable {
         view.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
     }
 
-    @Override
-    public void run() {
-
-    }
-
     /**
      * Rudimentary form for the system to determine whether it should hit or stay based on current score.
      * This can be greatly improved, however...Time restraints.. Of course...
@@ -143,12 +167,38 @@ public class GameActivity extends AppCompatActivity implements Runnable {
     }
 
     /**
-     * Not used. May employ.
-     * Could make option to play again and link to this method.
+     * Displays winner of game and the options to play again or go to the main menu.
+     * tv.setVisibility(View.VISIBILITY) is used to make the previously invisible buttons usable.
+     * @param winner - winner of the game.
+     */
+    public void displayWinner(Player winner)
+    {
+        tv = findViewById(R.id.Winner);
+        tv.setText("The " + winner.getName() + " has the winning hand!");
+        tv.setVisibility(View.VISIBLE);
+
+        tv = findViewById(R.id.Main_Menu);
+        tv.setVisibility(View.VISIBLE);
+
+        tv = findViewById(R.id.Play_Again);
+        tv.setVisibility(View.VISIBLE);
+
+
+
+    }
+
+
+    /**
+     *
+     * Resets game so another hand may be played.
+     * Gets intent and finishes it so it can start anew.
      */
     public void resetGame()
     {
-        game.newGame();
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+
     }
 
 }

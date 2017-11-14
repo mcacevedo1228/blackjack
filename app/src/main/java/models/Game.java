@@ -51,9 +51,10 @@ public class Game
                 // Deals card from deck, gets card rank and issues card to player.
                 Card card = deck.dealCard();
                 player.dealCard(card);
-                player.setScore(score(player));     // TODO: MAY NOT WORK
+                player.setScore(score(player));
             }
 
+            // Used to verify initial score.
             System.out.println(score(player));
         }
     }
@@ -83,9 +84,6 @@ public class Game
         Card card = deck.dealCard();
         getCurrPlayer().dealCard(card);
         player.setScore(score(player));
-
-        // TODO: DELETE CONSOLE LINE
-        System.out.println("New Score is:" + score(player));
     }
 
     /**
@@ -113,10 +111,7 @@ public class Game
             rank = card.getRank();
 
             if (rank < 2)
-            {
-                // TODO: DELETE CONSOLE LINE
-                System.out.println("Error");
-            }
+            {}
             // If 2-10 rank gets added to score
             else if(rank <=10)
             {
@@ -176,19 +171,20 @@ public class Game
 
     /**
      * Changes turns from user to dealer.
+     * Order matters. If 0 compared first, then it is switched and then switched again at next if.
+     * Comparison to 1 must come first.
      */
     public void nextPlayerTurn()
     {
-        if (playerTurn == 0)
-        {
-            playerTurn = 1;
-        }
         // Added just in case.
         if (playerTurn == 1)
         {
             playerTurn = 0;
         }
-
+        if (playerTurn == 0)
+        {
+            playerTurn = 1;
+        }
     }
 
     /**

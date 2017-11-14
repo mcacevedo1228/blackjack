@@ -86,4 +86,44 @@
         app:layout_constraintTop_toBottomOf="@+id/Dealer_Score"
         tools:text="Y" />
 
+    <TextView
+        android:id="@+id/Winner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="212dp"
+        android:text="@string/winner_slot"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Winner" />
+
+    <Button
+        android:id="@+id/Main_Menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="276dp"
+        android:text="@string/main_menu"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/Play_Again"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Main Menu" />
+
+    <Button
+        android:id="@+id/Play_Again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="276dp"
+        android:text="@string/play_again"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Main_Menu"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Play Again" />
+
 </android.support.constraint.ConstraintLayout>

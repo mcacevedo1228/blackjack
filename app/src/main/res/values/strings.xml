@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Marc's Blackjack Application</string>
+    <string name="app_name">Ace Blackjack</string>
     <string name="hello">Hello</string>
     <string name="hit">Hit</string>
     <string name="stay">Stay</string>
@@ -9,4 +9,6 @@
     <string name="dealer">Dealer</string>
     <string name="winner_slot">Win_Slot</string>
     <string name="new_game">New Game</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="play_again">Play Again</string>
 </resources>
