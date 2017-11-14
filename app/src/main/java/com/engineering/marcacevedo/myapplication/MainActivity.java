@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
-
+    // Class variable.
     private Button btn1;
 
     @Override
@@ -18,10 +18,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        setActivityBackgroundColor();
+
+        setActivityBackgroundColor();   // Change background color
 
         btn1 = (Button)findViewById(R.id.New_Game_Button);
-        btn1.setOnClickListener(this);
+        btn1.setOnClickListener(this); // If clicked, go to GameActivity
     }
 
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blackjack</string>
+    <string name="app_name">Marc's Blackjack Application</string>
     <string name="hello">Hello</string>
     <string name="hit">Hit</string>
     <string name="stay">Stay</string>
@@ -8,4 +8,5 @@
     <string name="y">Temp2</string>
     <string name="dealer">Dealer</string>
     <string name="winner_slot">Win_Slot</string>
+    <string name="new_game">New Game</string>
 </resources>

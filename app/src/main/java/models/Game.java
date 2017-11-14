@@ -13,10 +13,11 @@ import models.Player;
 public class Game
 {
 
+    // Class variables
     private Deck deck;
     private ArrayList<Player> players;
     private int playerTurn;
-    int cardCounter;
+
 
 
     /**
@@ -32,7 +33,7 @@ public class Game
         players.add(new Player("User"));
         players.add(new Player("Dealer"));
 
-        // User goes first.
+
         newGame();
     }
 
@@ -49,7 +50,6 @@ public class Game
             {
                 // Deals card from deck, gets card rank and issues card to player.
                 Card card = deck.dealCard();
-                cardParse(card);
                 player.dealCard(card);
                 player.setScore(score(player));     // TODO: MAY NOT WORK
             }
@@ -58,20 +58,11 @@ public class Game
         }
     }
 
-    // Gets card rank to be assigned for play.
-    public void cardParse(Card card)
-    {
-        if (card.getRank() <=6 && card.getRank() >=2)
-        {
-            cardCounter+=1;
-        }
-        else if (card.getRank() >= 10 && card.getRank() <=14)
-        {
-            cardCounter-=1;
-        }
-        else {}
-    }
-
+    /**
+     * Creates a new game(hand) to be played.
+     * Cycles through players in arrayList and clears hands followed by dealing.
+     * User starts.
+     */
     public void newGame()
     {
         for (Player player: players)
@@ -82,32 +73,49 @@ public class Game
         this.playerTurn = 0;
     }
 
+    /**
+     * Player hit. Takes a card from the deck and deals it to the player requesting hit.
+     * Sets score after hit.
+     * @param player - Player requesting hit. Will add card to his/her hand.
+     */
     public void hit(Player player)
     {
         Card card = deck.dealCard();
         getCurrPlayer().dealCard(card);
-        cardParse(card);
         player.setScore(score(player));
+
+        // TODO: DELETE CONSOLE LINE
         System.out.println("New Score is:" + score(player));
     }
 
+    /**
+     * Getter method for the current player moving.
+     * @return Current player
+     */
     public Player getCurrPlayer()
     {
         return players.get(playerTurn);
     }
 
+    /**
+     * Scores the hand of the player passed in.
+     * @param player Player's hand to be scored.
+     * @return int value of player's score.
+     */
     public int score(Player player)
     {
         int score = 0;
         int numAces = 0;
         int rank;
+
         for (Card card: player.getHand())
         {
             rank = card.getRank();
 
             if (rank < 2)
             {
-                System.out.println("NOOO");
+                // TODO: DELETE CONSOLE LINE
+                System.out.println("Error");
             }
             // If 2-10 rank gets added to score
             else if(rank <=10)
@@ -124,6 +132,7 @@ public class Game
                 score += 11;
                 numAces++;
             }
+            // If brought over 21 by Ace, soft scoring occurs and ace becomes +1
             while (score > 21 && numAces > 0)
             {
                 score-= 10;
@@ -133,11 +142,17 @@ public class Game
         return score;
     }
 
+
+    /**
+     * Scores each hand to determine a winner.
+     * @return Player that won the hand.
+     */
     public Player scoreHand()
     {
         int maxScore = 0;
         Player winner = null;
 
+        // Cycle through, take score and determine winner based on condition.
         for (Player player: players)
         {
             player.setScore(score(player));
@@ -159,25 +174,35 @@ public class Game
     }
 
 
+    /**
+     * Changes turns from user to dealer.
+     */
     public void nextPlayerTurn()
     {
+        if (playerTurn == 0)
+        {
+            playerTurn = 1;
+        }
+        // Added just in case.
         if (playerTurn == 1)
         {
             playerTurn = 0;
         }
 
-        if (playerTurn == 0)
-        {
-            playerTurn = 1;
-        }
-
     }
 
+    /**
+     * Retrieves an arrayList of players in the game. (Should only ever be user and dealer)
+     * @return List of players in game.
+     */
     public ArrayList<Player> getPlayers()
     {
         return players;
     }
 
+    /**
+     * Getter method to determine who's turn it is.
+     */
     public Player getCurrentPlayer()
     {
         return players.get(playerTurn);
