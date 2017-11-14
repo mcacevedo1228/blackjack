@@ -127,6 +127,10 @@ public class GameActivity extends AppCompatActivity implements Runnable {
 
     }
 
+    /**
+     * Rudimentary form for the system to determine whether it should hit or stay based on current score.
+     * This can be greatly improved, however...Time restraints.. Of course...
+     */
     private void dealerMove()
     {
         Player dealer = game.getPlayers().get(1);
@@ -138,7 +142,10 @@ public class GameActivity extends AppCompatActivity implements Runnable {
 
     }
 
-
+    /**
+     * Not used. May employ.
+     * Could make option to play again and link to this method.
+     */
     public void resetGame()
     {
         game.newGame();
