@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Blackjack</string>
     <string name="hello">Hello</string>
+    <string name="hit">Hit</string>
+    <string name="stay">Stay</string>
+    <string name="score">Score:</string>
+    <string name="x">x</string>
+    <string name="y">Temp2</string>
+    <string name="dealer">Dealer</string>
+    <string name="winner_slot">Win_Slot</string>
 </resources>

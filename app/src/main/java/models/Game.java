@@ -29,12 +29,11 @@ public class Game
 
         //Creates list of players and adds players to list.
         players = new ArrayList<Player>();
-        players.add(new Player("Dealer"));
         players.add(new Player("User"));
+        players.add(new Player("Dealer"));
 
         // User goes first.
-        playerTurn = 1;
-
+        newGame();
     }
 
 
@@ -52,7 +51,10 @@ public class Game
                 Card card = deck.dealCard();
                 cardParse(card);
                 player.dealCard(card);
+                player.setScore(score(player));     // TODO: MAY NOT WORK
             }
+
+            System.out.println(score(player));
         }
     }
 
@@ -75,16 +77,18 @@ public class Game
         for (Player player: players)
         {
             player.clearHand();
-            dealCards();
-            playerTurn = 1;
         }
+        dealCards();
+        this.playerTurn = 0;
     }
 
-    public void hit()
+    public void hit(Player player)
     {
         Card card = deck.dealCard();
         getCurrPlayer().dealCard(card);
         cardParse(card);
+        player.setScore(score(player));
+        System.out.println("New Score is:" + score(player));
     }
 
     public Player getCurrPlayer()
@@ -100,14 +104,22 @@ public class Game
         for (Card card: player.getHand())
         {
             rank = card.getRank();
-            if(rank <=10)
+
+            if (rank < 2)
+            {
+                System.out.println("NOOO");
+            }
+            // If 2-10 rank gets added to score
+            else if(rank <=10)
             {
                 score+= rank;
             }
+            // Else, + 10
             else if (rank <= 13)
             {
                 score+= 10;
             }
+            // Ace
             else {
                 score += 11;
                 numAces++;
@@ -123,15 +135,25 @@ public class Game
 
     public Player scoreHand()
     {
+        int maxScore = 0;
         Player winner = null;
 
         for (Player player: players)
         {
             player.setScore(score(player));
-            if (player.getScore() <= 21)
+
+            // If score is <= 21 and greater than the held max score, they win.
+            if (player.getScore() <= 21 && player.getScore() > maxScore)
             {
+                maxScore = player.getScore();
                 winner = player;
             }
+            // If score is <= 21 and even to dealer score, house wins.
+            else if (player.getScore() <= 21 && player.getScore() == maxScore)
+            {
+                winner = players.get(1);
+            }
+
         }
         return winner;
     }
@@ -143,10 +165,12 @@ public class Game
         {
             playerTurn = 0;
         }
-        else
+
+        if (playerTurn == 0)
         {
             playerTurn = 1;
         }
+
     }
 
     public ArrayList<Player> getPlayers()

@@ -15,11 +15,13 @@ public class Deck {
     public Deck()
     {
         cards = new Card[52];
+        fillDeck();
+        shuffleDeck();
     }
 
 
     /**
-     * Fills array of Cards with all card combinations.
+     * Fills array of Cards with all cards.
      */
     private void fillDeck()
     {

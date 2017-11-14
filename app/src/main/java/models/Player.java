@@ -53,6 +53,7 @@ public class Player {
     public void dealCard(Card card)
     {
         hand.add(card);
+
     }
 
     /**
