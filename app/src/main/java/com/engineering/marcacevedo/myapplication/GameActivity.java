@@ -47,6 +47,18 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    private View.OnClickListener playAgainClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v)
+        {
+            playAgainButtonClicked();
+        }
+    };
+
+    private void playAgainButtonClicked() {
+        resetGame();
+    }
+
     private void mainMenButtonClicked() {
         Intent intent = new Intent(GameActivity.this, MainActivity.class);
         startActivity(intent);
@@ -108,93 +120,13 @@ public class GameActivity extends AppCompatActivity {
 
         setScreenScore(game);   // Sets the initial score of cards dealt.
 
+        // Click Listeners for each button.
         hit.setOnClickListener(hitClickListener);
         stay.setOnClickListener(stayClickListener);
         main_men.setOnClickListener(mainMenClickListener);
-
-
-
-
-       // TODO: DELETE THIS. FOUND MORE ELEGANT WAY
-
-        /*
-        // Click listener with Overridden onClick method to execute desired functions.
-        hit.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                // Hit user and update the score.
-                game.hit(user);
-                setScreenScore(game);
-
-                // If current player busts, go to next player's turn.
-                if (game.score(user) > 21)
-                {
-                    game.nextPlayerTurn();
-                }
-
-                // If the current player is the Dealer, let him make his move. Upon completion, scoring takes place.
-                if (game.getCurrentPlayer().getName().equals("Dealer"))
-                {
-                    // Very rudimentary way of determining whether to hit or not.
-                    dealerMove();
-
-                    // Scores hand to determine winner.
-                    game.scoreHand();
-                    winner = game.scoreHand();
-                    displayWinner(winner);
-                }
-            }
-        });
-    */
-
-        /*
-        // Click listener with Overridden onClick method to execute desired functions.
-        stay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                // Signifies next player's turn.
-                game.nextPlayerTurn();
-
-                if (game.getCurrentPlayer().getName().equals("Dealer"))
-                {
-                    dealerMove();
-                    winner = game.scoreHand();
-                    displayWinner(winner);
-                }
-            }
-        });
-        */
-
-
-
-        /*
-
-        // Click listener with Overridden onClick method to execute desired functions.
-        main_men.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(GameActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        */
-
-
-
-        // Click listener with Overridden onClick method to execute desired functions.
-        play_again.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            { resetGame(); }
-        });
-
+        play_again.setOnClickListener(playAgainClickListener);
     }
+
 
     /**
      * Updates the score for the users to view.
